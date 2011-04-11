@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{41F14174-A916-40BC-8567-E16FF123CF4A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FIM2010SampleAuthNActivity</RootNamespace>
+    <AssemblyName>FIM2010OTP</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="CellGatewayWrapper.cs" />
+    <Compile Include="CellOTPGate.cs" />
+    <Compile Include="CellOTPGateUI.cs" />
+    <Compile Include="CellOTPGateUI.designer.cs">
+      <DependentUpon>CellOTPGateUI.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.IdentityManagement.Logging">
+      <HintPath>..\..\..\DHLDirectoryTransformation\AssemblyReferences\Microsoft.IdentityManagement.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityManagement.SettingsContract">
+      <HintPath>..\..\..\DHLDirectoryTransformation\AssemblyReferences\Microsoft.IdentityManagement.SettingsContract.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityManagement.Sqm">
+      <HintPath>..\..\..\DHLDirectoryTransformation\AssemblyReferences\Microsoft.IdentityManagement.Sqm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityManagement.WebUI.Controls">
+      <HintPath>..\..\..\DHLDirectoryTransformation\AssemblyReferences\Microsoft.IdentityManagement.WebUI.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityManagement.WFExtensionInterfaces">
+      <HintPath>..\..\..\DHLDirectoryTransformation\AssemblyReferences\Microsoft.IdentityManagement.WFExtensionInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\DHLDirectoryTransformation\AssemblyReferences\Microsoft.IdentityModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ResourceManagement">
+      <HintPath>..\..\..\DHLDirectoryTransformation\AssemblyReferences\Microsoft.ResourceManagement.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.ResourceManagement.WorkflowContract">
+      <HintPath>..\..\..\DHLDirectoryTransformation\AssemblyReferences\Microsoft.ResourceManagement.WorkflowContract.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Workflow.Activities" />
+    <Reference Include="System.Workflow.ComponentModel" />
+    <Reference Include="System.Workflow.Runtime" />
+    <Reference Include="System.WorkflowServices" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\DHLDirectoryTransformation\Fim2010client\Microsoft.ResourceManagement.Client\Microsoft.ResourceManagement.Client.csproj">
+      <Project>{6C1064E6-72B3-41AA-B543-4164EC056F68}</Project>
+      <Name>Microsoft.ResourceManagement.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\DHLDirectoryTransformation\Fim2010client\Microsoft.ResourceManagement.ObjectModel\Microsoft.ResourceManagement.ObjectModel.csproj">
+      <Project>{CECB3A49-A780-4558-A402-1F3FF42B0B18}</Project>
+      <Name>Microsoft.ResourceManagement.ObjectModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
