@@ -14,14 +14,44 @@ using Microsoft.ResourceManagement.Client;
 using Microsoft.ResourceManagement.Workflow.Activities;
 using Microsoft.ResourceManagement.ObjectModel.ResourceTypes;
 using System.DirectoryServices.AccountManagement;
+using System.ServiceModel;
 
 namespace FIM2010SampleOTPActivity
 {
     public partial class SMSPasswordReset : SequenceActivity
     {
+
+        string userCellPhone = "5125607446";
+
         public SMSPasswordReset()
         {
             InitializeComponent();
+        }
+
+        protected override void Initialize(IServiceProvider provider)
+        {
+            SequentialWorkflow containingSequentialWorkflow = null;
+            SequentialWorkflow.TryGetContainingWorkflow(this, out containingSequentialWorkflow);
+
+            //using (ServiceSecurityContext.Current.WindowsIdentity.Impersonate())
+            //{
+            //    using (DefaultClient client = new DefaultClient())
+            //    {
+            //        client.RefreshSchema();
+
+
+            //        Guid targetUser;
+            //        if (containingSequentialWorkflow.ActorId == CellOTPGate.AnonymousID)
+            //        { targetUser = containingSequentialWorkflow.TargetId; }
+            //        else
+            //        { targetUser = containingSequentialWorkflow.ActorId; }
+
+            //        RmPerson person = client.Get(new Microsoft.ResourceManagement.ObjectModel.RmReference(targetUser.ToString())) as RmPerson;
+            //        userCellPhone = person.MobilePhone;
+            //    }
+            //}
+
+            base.Initialize(provider);
         }
 
         protected override ActivityExecutionStatus Execute(ActivityExecutionContext executionContext)
@@ -29,7 +59,8 @@ namespace FIM2010SampleOTPActivity
             SequentialWorkflow containingSequentialWorkflow = null;
             SequentialWorkflow.TryGetContainingWorkflow(this, out containingSequentialWorkflow);
 
-            this.readResourceActivity1.ActorId = containingSequentialWorkflow.ActorId;
+            this.readResourceActivity1.ActorId = new Guid("e05d1f1b-3d5e-4014-baa6-94dee7d68c89");
+            this.readResourceActivity1.ResourceId = containingSequentialWorkflow.TargetId;
             return base.Execute(executionContext);
         }
 
@@ -37,26 +68,6 @@ namespace FIM2010SampleOTPActivity
 
         private void SendOTPPassword(object sender, EventArgs e)
         {
-            string userCellPhone;
-            SequentialWorkflow containingSequentialWorkflow = null;
-            SequentialWorkflow.TryGetContainingWorkflow(this, out containingSequentialWorkflow);
-
-            using (DefaultClient client = new DefaultClient())
-            {
-                client.RefreshSchema();
-
-
-                Guid targetUser;
-                if (containingSequentialWorkflow.ActorId == CellOTPGate.AnonymousID)
-                { targetUser = containingSequentialWorkflow.TargetId; }
-                else
-                { targetUser = containingSequentialWorkflow.ActorId; }
-
-                RmPerson person = client.Get(new Microsoft.ResourceManagement.ObjectModel.RmReference(targetUser.ToString())) as RmPerson;
-                userCellPhone = person.MobilePhone;
-            }
-
-
             Random randGen = new Random();
             var generatedPassword = "p@ssword" + randGen.Next(0, 100).ToString();
 
