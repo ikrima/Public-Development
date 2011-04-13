@@ -15,7 +15,7 @@ namespace FIMExtensions.OTP
 {
     class Utilities
     {
-        void TestOTPBusiness()
+        internal static void TestOTPBusiness()
         {
             AuthenticationRequiredException authnException = null;
             WorkflowAuthenticationChallenge workflowAuthenticationChallenge = null;

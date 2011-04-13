@@ -66,9 +66,9 @@
       <Project>{CECB3A49-A780-4558-A402-1F3FF42B0B18}</Project>
       <Name>Microsoft.ResourceManagement.ObjectModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FIM2010 Sample AuthN Activity\FIM2010 Sample OTP AuthN Activity.csproj">
+    <ProjectReference Include="..\FIM2010 Sample AuthN Activity\FIM2010 Sample OTP Activity.csproj">
       <Project>{41F14174-A916-40BC-8567-E16FF123CF4A}</Project>
-      <Name>FIM2010 Sample OTP AuthN Activity</Name>
+      <Name>FIM2010 Sample OTP Activity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
