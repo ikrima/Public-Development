@@ -16,14 +16,14 @@ using Microsoft.ResourceManagement;
 using Microsoft.ResourceManagement.Client;
 using Microsoft.ResourceManagement.ObjectModel.ResourceTypes;
 
-namespace FIM2010SampleAuthNActivity
+namespace FIM2010SampleOTPActivity
 {
 
     [Serializable]
     public class CellOTPGate : AuthenticationGate
     {
-        static readonly Guid AnonymousID = new Guid("B0B36673-D43B-4CFA-A7A2-AFF14FD90522");
-        static readonly Guid activityGuid = new Guid("18360067-61EE-4752-AA04-07B2290D3F89");
+        public static readonly Guid AnonymousID = new Guid("B0B36673-D43B-4CFA-A7A2-AFF14FD90522");
+        public static readonly Guid activityGuid = new Guid("18360067-61EE-4752-AA04-07B2290D3F89");
 
         public string currentInstanceOTP = string.Empty;
         public string userCellPhone = string.Empty;

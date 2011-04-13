@@ -40,13 +40,20 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.WorkflowServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\OTPWebClient\Utilities.cs">
+      <Link>Utilities.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,9 +66,9 @@
       <Project>{CECB3A49-A780-4558-A402-1F3FF42B0B18}</Project>
       <Name>Microsoft.ResourceManagement.ObjectModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FIM2010 Sample AuthN Activity\FIM2010 Sample AuthN Activity.csproj">
+    <ProjectReference Include="..\FIM2010 Sample AuthN Activity\FIM2010 Sample OTP AuthN Activity.csproj">
       <Project>{41F14174-A916-40BC-8567-E16FF123CF4A}</Project>
-      <Name>FIM2010 Sample AuthN Activity</Name>
+      <Name>FIM2010 Sample OTP AuthN Activity</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

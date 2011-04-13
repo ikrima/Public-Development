@@ -5,7 +5,7 @@ using System.Text;
 using System.Net.Mail;
 using Microsoft.ResourceManagement.Client;
 
-namespace FIM2010SampleAuthNActivity
+namespace FIM2010SampleOTPActivity
 {
     public enum CellCarriers
     {

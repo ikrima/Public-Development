@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FIM2010SampleAuthNActivity;
+using FIM2010SampleOTPActivity;
 
 namespace ConsoleTestBed
 {

@@ -6,7 +6,7 @@ using Microsoft.IdentityManagement.WebUI.Controls;
 using Microsoft.ResourceManagement.Workflow.Activities;
 using System.Workflow.ComponentModel;
 
-namespace FIM2010SampleAuthNActivity
+namespace FIM2010SampleOTPActivity
 {
     public partial class CellOTPGateUI : ActivitySettingsPart
     {

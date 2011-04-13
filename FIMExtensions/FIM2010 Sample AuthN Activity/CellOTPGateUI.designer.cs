@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.IdentityManagement.WebUI.Controls;
 using System.Web.UI.WebControls;
 
-namespace FIM2010SampleAuthNActivity
+namespace FIM2010SampleOTPActivity
 {
     partial class CellOTPGateUI : ActivitySettingsPart
     {
