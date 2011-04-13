@@ -15,6 +15,7 @@ using Microsoft.ResourceManagement.Workflow.Activities;
 using Microsoft.ResourceManagement;
 using Microsoft.ResourceManagement.Client;
 using Microsoft.ResourceManagement.ObjectModel.ResourceTypes;
+using System.ServiceModel;
 
 namespace FIM2010SampleOTPActivity
 {
@@ -34,27 +35,32 @@ namespace FIM2010SampleOTPActivity
 
         protected override void InitializeAuthenticationGate(IServiceProvider provider)
         {
+            
             // When the activity is first loaded, we're going to try to retrieve the user info from the registration data
-            if (string.IsNullOrEmpty(this.userCellPhone = UnicodeEncoding.Unicode.GetString(this.AuthenticationGateActivity.RegistrationData)))
+            if (this.AuthenticationGateActivity.RegistrationData == null ||
+                string.IsNullOrEmpty(this.userCellPhone = UnicodeEncoding.Unicode.GetString(this.AuthenticationGateActivity.RegistrationData)))
             {
                 //Looks like our cell phone data was not stored in registration data
                 //Default to FIM store
-                using (DefaultClient client = new DefaultClient())
+                using (ServiceSecurityContext.Current.WindowsIdentity.Impersonate())
                 {
-                    client.RefreshSchema();
+                    using (DefaultClient client = new DefaultClient())
+                    {
+                        client.RefreshSchema();
 
-                    SequentialWorkflow containingSequentialWorkflow = null;
-                    SequentialWorkflow.TryGetContainingWorkflow(this.AuthenticationGateActivity, out containingSequentialWorkflow);
+                        SequentialWorkflow containingSequentialWorkflow = null;
+                        SequentialWorkflow.TryGetContainingWorkflow(this.AuthenticationGateActivity, out containingSequentialWorkflow);
 
-                    Guid targetUser;
-                    if (containingSequentialWorkflow.ActorId == CellOTPGate.AnonymousID)
-                    { targetUser = containingSequentialWorkflow.TargetId; }
-                    else
-                    { targetUser = containingSequentialWorkflow.ActorId; }
+                        Guid targetUser;
+                        if (containingSequentialWorkflow.ActorId == CellOTPGate.AnonymousID)
+                        { targetUser = containingSequentialWorkflow.TargetId; }
+                        else
+                        { targetUser = containingSequentialWorkflow.ActorId; }
 
-                    RmPerson person = client.Get(new Microsoft.ResourceManagement.ObjectModel.RmReference(targetUser.ToString())) as RmPerson;
-                    this.userCellPhone = person.MobilePhone;
+                        RmPerson person = client.Get(new Microsoft.ResourceManagement.ObjectModel.RmReference(targetUser.ToString())) as RmPerson;
+                        this.userCellPhone = person.MobilePhone;
 
+                    }
                 }
             }
 
