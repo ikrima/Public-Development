@@ -32,10 +32,13 @@ namespace FIM2010SampleOTPActivity
         [NonSerialized]
         WorkflowAuthenticationChallenge authenticationChallengeField;
 
+        private bool sentSMS;
+
 
         protected override void InitializeAuthenticationGate(IServiceProvider provider)
         {
-            
+            sentSMS = false;
+
             // When the activity is first loaded, we're going to try to retrieve the user info from the registration data
             if (this.AuthenticationGateActivity.RegistrationData == null ||
                 string.IsNullOrEmpty(this.userCellPhone = UnicodeEncoding.Unicode.GetString(this.AuthenticationGateActivity.RegistrationData)))
@@ -113,10 +116,13 @@ namespace FIM2010SampleOTPActivity
                     this.authenticationChallengeField.SetData(UnicodeEncoding.Unicode.GetBytes("Please enter the code sent to this phone number " + this.userCellPhone));
 
                     //Send out that OTP
-                    Random randGen = new Random();
-                    this.currentInstanceOTP = randGen.Next(100, 999).ToString();
-                    CellGatewayWrapper.SendTextMessage(this.userCellPhone, CellCarriers.ATT, this.currentInstanceOTP);
-
+                    if (!sentSMS)
+                    {
+                        Random randGen = new Random();
+                        this.currentInstanceOTP = randGen.Next(100, 999).ToString();
+                        CellGatewayWrapper.SendTextMessage(this.userCellPhone, CellCarriers.ATT, this.currentInstanceOTP);
+                        sentSMS = true;
+                    }
 
                     return this.authenticationChallengeField;
                 }

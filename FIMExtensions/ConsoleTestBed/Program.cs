@@ -12,7 +12,10 @@ namespace ConsoleTestBed
         static void Main(string[] args)
         {
             Utilities.TestOTPBusiness();
+
             CellGatewayWrapper.SendTextMessage("5125607446", CellCarriers.ATT, "123");
+
+            
         }
     }
 }

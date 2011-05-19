@@ -37,8 +37,8 @@
             word-spacing: 0em;
             line-height: 1.2;
         }
-        
-    </style><%--
+    </style>
+    <%--
     <script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.8.11.custom.min.js"></script>
     <script type="text/javascript">
@@ -75,7 +75,7 @@
     <form id="form1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Always">
         <ContentTemplate>
             <h2 class="demoHeaders">
                 One Time Password Reset</h2>
@@ -90,6 +90,16 @@
                             WatermarkCssClass="watermarked">
                         </ajx:TextBoxWatermarkExtender>
                         <asp:Button ID="sendOTPButton" runat="server" OnClick="sendOTPButton_Click" Text="Send OTP" />
+                        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                            <ProgressTemplate>
+                                <span class="commonControlsTwoTierLabel">
+                                    <asp:Label ID="Label6" runat="server" ForeColor="Red" Text="Working..."></asp:Label>
+                                </span>
+                            </ProgressTemplate>
+                        </asp:UpdateProgress>
+                        <br />
+                        <br />
+                        <br />
                     </div>
                 </div>
                 <div>
@@ -98,19 +108,33 @@
                     <div>
                         <asp:Label ID="otpGateInstructions" runat="server" />
                         <asp:TextBox ID="otpInput" runat="server" />
-                        <asp:Button ID="validateOTPButton" runat="server" OnClick="validateOTPButton_Click" Text="Validate OTP" />
-                        </div>
+                        <asp:Button ID="validateOTPButton" runat="server" OnClick="validateOTPButton_Click"
+                            Text="Validate OTP" />
+                        <asp:UpdateProgress ID="UpdateProgress2" runat="server" AssociatedUpdatePanelID="UpdatePanel1">
+                            <ProgressTemplate>
+                                <span class="commonControlsTwoTierLabel">
+                                    <asp:Label ID="Label7" runat="server" ForeColor="Red" Text="Working..."></asp:Label>
+                                </span>
+                            </ProgressTemplate>
+                        </asp:UpdateProgress>
+                        <br />
+                        <br />
+                        <br />
+                    </div>
                 </div>
                 <div>
                     <h3>
                         <a href="#">Results</a></h3>
                     <div>
-                        <asp:Label ID="otpvalidationResults" runat="server"/>
-                        </div>
+                        <asp:Label ID="otpvalidationResults" runat="server" />
+                    </div>
                 </div>
             </div>
-     
         </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="sendOTPButton" />
+            <asp:AsyncPostBackTrigger ControlID="validateOTPButton" />
+        </Triggers>
     </asp:UpdatePanel>
     </form>
 </body>
