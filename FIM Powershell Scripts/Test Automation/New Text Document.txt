@@ -1,0 +1,38 @@
+#----------------------------------------------------------------------------------------------------------
+ set-variable -name URI -value "http://localhost:5725/resourcemanagementservice' " -option constant 
+#----------------------------------------------------------------------------------------------------------
+ function DeleteObject
+ {
+    PARAM($objectType, $objectId)
+    END
+    {
+       $importObject = New-Object Microsoft.ResourceManagement.Automation.ObjectModel.ImportObject
+       $importObject.ObjectType = $objectType
+       $importObject.TargetObjectIdentifier = $objectId
+       $importObject.SourceObjectIdentifier = $objectId
+       $importObject.State = 2 
+       $importObject | Import-FIMConfig -uri $URI
+     } 
+ }
+#----------------------------------------------------------------------------------------------------------
+ if(@(get-pssnapin | where-object {$_.Name -eq "FIMAutomation"} ).count -eq 0) {add-pssnapin FIMAutomation}
+ $allobjects = export-fimconfig -uri $URI `
+                                –onlyBaseResources `
+                                -customconfig "/Person"
+ $allobjects | Foreach-Object {
+    $displayName = $_.ResourceManagementObject.ResourceManagementAttributes | `
+                      Where-Object {$_.AttributeName -eq "DisplayName"}
+    if([string]::Compare($displayName.Value, "Administrator", $True) -eq 0)
+    {write-host "Administrator NOT deleted"}
+
+    elseif([string]::Compare($displayName.Value, "Built-in Synchronization Account", $True) -eq 0)
+    {write-host "Built-in Synchronization Account NOT deleted"}
+
+    else { 
+      $objectId = (($_.ResourceManagementObject.ObjectIdentifier).split(":"))[2]
+      DeleteObject -objectType "Person" `
+                   -objectId $objectId
+
+      write-host "`nObject deleted`n"  $displayName.Value }
+ }
+ 
