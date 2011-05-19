@@ -1,0 +1,90 @@
+BODY
+{
+    color: #ffffff;
+    FONT-FAMILY: verdana, tahoma;
+    FONT-SIZE: 11px;
+    BACKGROUND-ATTACHMENT: fixed;
+    BACKGROUND-REPEAT: no-repeat;
+    BACKGROUND-COLOR: #202020;
+    BORDER-BOTTOM-WIDTH: 0px;
+    BORDER-LEFT-WIDTH: 0px;
+    BORDER-RIGHT-WIDTH: 0px;
+    BORDER-TOP-WIDTH: 0px;
+    MARGIN: 0px 0px 0px 0px;
+    VERTICAL-ALIGN: middle
+}
+
+TABLE.guiWindow
+{
+    background-color:#404040;
+    border:0;
+    background-repeat:no-repeat;
+    background-position:center center
+}
+TD.windotTitle
+{
+    background-color:#606060;
+    font-size: 11px
+}
+
+TD
+{
+    font-size: 11px;
+    padding:0;
+    border:0
+}
+
+A:LINK
+{
+    COLOR: #ffffff
+}
+A:HOVER
+{
+    COLOR: #ffff00
+}
+A:VISITED
+{
+    COLOR: #ffffff
+}
+
+A.image:LINK
+{
+    COLOR: #000000
+}
+
+A.image:VISITED
+{
+    COLOR: #000000
+}
+
+.userInput
+{
+ background: #202020;
+ background-color: #202020;
+ color:#ffffff;
+ border: 0px solid;
+ border-color: #808080 #808080 #808080 #808080;
+}
+
+.userInputButtons
+{
+ background: #505050;
+ border: 1px solid;
+ border-color: #808080 #808080 #808080 #808080;
+ color:#ffffff
+}
+
+
+.code {
+	font-family: Courier, sans-serif;
+	font-size: 12px;
+	color: #40c040;
+}
+
+.userInputCheckbox
+{
+   color: #ffc040;
+   border-color: #808080 #808080 #808080 #808080;
+   background: #505050;
+   border: 1px solid
+}

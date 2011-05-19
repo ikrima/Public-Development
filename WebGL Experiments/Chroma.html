@@ -1,0 +1,144 @@
+﻿<!--<!-- Source based on = http://craftymind.com/factory/html5video/ -->
+<!DOCTYPE HTML>
+<html> 
+<head> 
+<title>HTML5 Video 3D</title> 
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+<style type="text/css">
+/* Remove margins from the 'html' and 'body' tags, and ensure the page takes up full screen height */
+html, body {height:100%; margin:0; padding:0;}
+/* Set the position and dimensions of the background image. */
+#page-background {position:fixed; top:0; left:0; width:100%; height:100%; z-index:-100}
+/* Specify the position and layering for the content that needs to appear in front of the background image. Must have a higher z-index value than the background image. Also add some padding to compensate for removing the margin from the 'html' and 'body' tags. */
+#content {position:relative; z-index:1; padding:10px;}
+</style>
+<script type="text/javascript">
+
+    var enableLayering = false;
+    var enableMasking = false;
+    var video;
+    var videoalex;
+    var copy;
+    var copycanvas;
+    var draw;
+
+    var SOURCERECT = { x: 0, y: 0, w: 0, h: 0 };
+    var PAINTRECT = { x: 0, y: 0, w: 1000, h: 640 };
+
+    function ShowHideLayer() {
+        var thirdLayer = document.getElementById('thirdLayer');
+        enableLayering = !enableLayering;
+        thirdLayer.style.visibility = enableLayering ? 'visible' : 'hidden';
+    }
+
+    function init() {
+        video = document.getElementById('sourcevid');
+        videoalex = document.getElementById('sourcevidalex');
+        copycanvas = document.getElementById('sourcecopy');
+        copycanvasalex = document.getElementById('sourcecopyalex');
+        copy = copycanvas.getContext('2d');
+        copyalex = copycanvasalex.getContext('2d');
+        var outputcanvas = document.getElementById('output');
+        draw = outputcanvas.getContext('2d');
+        setInterval("processFrame()", 41);
+    }
+
+    var debug = false;
+
+    function processFrame() {
+        if (!isNaN(video.duration)) {
+            if (SOURCERECT.w == 0) {
+                SOURCERECT = { x: 0, y: 0, w: video.videoWidth, h: video.videoHeight };
+            }
+            //loop
+            if (video.currentTime == video.duration) {
+                video.currentTime = 0;
+            }
+        }
+
+        if (!isNaN(videoalex.duration)) {
+            
+            //loop
+            if (videoalex.currentTime == videoalex.duration) {
+                videoalex.currentTime = 0;
+            }
+        }
+
+        var debugStr = "";
+
+        copy.drawImage(video, 0, 0);
+
+        copyalex.drawImage(videoalex, 0, 0);
+        
+//        draw.clearRect(PAINTRECT.x, PAINTRECT.y, PAINTRECT.w, PAINTRECT.h);
+    
+        var frame = this.copy.getImageData(0, 0, video.videoWidth, video.videoHeight);
+        var l = frame.data.length / 4;
+
+        var framealex = this.copyalex.getImageData(0, 0, videoalex.videoWidth, videoalex.videoHeight);
+        var lalex = framealex.data.length / 4;
+
+        var framelength = Math.min(l, lalex);
+        for (var i = 0; i < framelength; i++) 
+        {
+          var r = framealex.data[i * 4 + 0];
+          var g = framealex.data[i * 4 + 1];
+          var b = framealex.data[i * 4 + 2];
+          var a = frame.data[i * 4 + 1];
+          if (enableMasking) {
+              framealex.data[i * 4 + 3] = (a < 150 ? 0 : a) > 170 ? 255 : a;
+          }
+        }
+
+      //this.draw.drawImage(videoalex, 0, 0);
+        this.draw.putImageData(framealex, 0, 0);
+
+       
+        if (debug) {
+            //debug = false;
+            document.getElementById('trace').innerHTML = "" + shadow1.x + "," + shadow1.y + "-" + shadow2.x + "," + shadow2.y;
+        }
+    }
+</script> 
+</head> 
+ 
+<body onload="init()" style="margin: 0px;">
+    <div id="page-background"><img id="thirdLayer" src="bgimage.jpg" width="100%" height="100%" style="visibility: hidden"></div>
+    <div>
+        <br />
+        <p>
+            3D Video. Technical notes:</p>
+        <br />
+        <ul>
+            <li>Work/code based on Sean Christmann's demo.</li>
+            <li>Using canvas, double buffering, and js to do 3d transformation render. I imagine
+                the drawimage calls get translated to gl calls</li>
+            <li>Fake 3D though, using cosine/sin tricks + bitblts to xform the video. Still doing a per frame copy though</li>
+            <li>Works well in Chrome/IE9</li>
+            <li>Pretty good perf "out of box"; no need for shaders yet. Res is 640x360, 780 kbps
+                video, 171kbps audio, 24 fps</li>
+        </ul>
+    </div>
+    <div style="display: none">
+        <video id="sourcevid" autoplay="true" loop="true"> 
+            <source src="BigBuckBunny_640x360.mp4" type="video/mp4" />
+        </video>
+        <canvas id="sourcecopy" width="640" height="360"></canvas>
+        
+        <video id="sourcevidalex" autoplay="true" loop="true"> 
+            <source src="alexx.mp4" type="video/mp4" />
+        </video>
+        <canvas id="sourcecopyalex" width="640" height="352"></canvas>
+    </div>
+    <button onclick="javascript: enableMasking = !enableMasking;" >Toggle Masking</button>
+    <button onclick="ShowHideLayer()">Toggle 3rd Layer</button>
+
+    <div style="position: relative">
+            <!--<iframe style="position: absolute; top: 0; right: 0; z-index:0;" src="http://blog.alexxhenry.com/" width="1000" height="600" />-->
+            <p>This is a bunch of text</p>
+            <canvas style="position: absolute; top: 0; left: 0;z-index:10;" id="output" width="1000" height="640"  />
+            
+    </div>
+</body>
+</html>
+-->

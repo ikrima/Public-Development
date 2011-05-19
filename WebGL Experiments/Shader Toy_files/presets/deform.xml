@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<shadertoy version="0.1">
+
+    <info name="Deform" date="2011" author="e" link="http://nowhere/">
+    <comments>Real-time color swapping of a Ferrari Ad.  Original video displayed below</comments>
+    </info>
+
+    <options>
+        <resolution xres="640" yres="360"/>
+    </options>
+
+    <textures>
+      <texture id="0" src="Shader toy_files/presets/tex3.jpg"/>
+      <texture id="1" src=""/>
+      <texture id="2" src=""/>
+      <texture id="3" src=""/>
+    </textures>
+
+    <shader src="Shader Toy_files/presets/deform.txt"/>
+
+</shadertoy>
