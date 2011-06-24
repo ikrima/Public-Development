@@ -1,0 +1,306 @@
+
+<!-- Framework hacked from http://www.iquilezles.org/apps/shadertoy/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Proof of concepts</title>
+
+
+<script type="text/javascript" src="./syco_files/effect.js"></script>
+<script type="text/javascript" src="./syco_files/shadertoy.js"></script>
+<!--<script type="text/javascript" src="codepress/engine.js"></script>-->
+<script type="text/javascript" src="./syco_files/linesForTextarea.js"></script>
+
+<script type="text/javascript">
+var gShaderToy = null;
+//var videoSource = ;
+
+function myInit() {
+   // document.getElementById('sourcevid2').src = 'alexx.mp4';
+    videoElement = document.getElementById("sourcevid");
+    videoElement2 = document.getElementById("sourcevid2");
+    //videoElement2.src = window.opener.videoData;
+    canvaselement = document.getElementById("sourcecopy");
+
+    videoElement2.src = window.webkitURL.createObjectURL(window.opener.videoData);
+    videoElement2.onload = function () {
+        window.webkitURL.revokeObjectURL(this.src);
+    }
+
+//    var reader = new FileReader();
+//    // Closure to capture the file information.
+//    reader.onload = (function (theFile) {
+//        return function (e) {
+//            videoElement2.src = e.target.result;
+//        };
+//    })(window.opener.videoData);
+
+//    // Read in the image file as a data URL.
+//    reader.readAsDataURL(window.opener.videoData);
+
+    addLinesToTextArea('myShaderCode');
+
+    //var mycodepress = document.getElementById("myShaderCode").contentWindow.Engine;
+    //mycodepress.initialize()
+    //gShaderToy = new ShaderToy(mycodepress);
+    gShaderToy = new ShaderToy(null);
+    if( !gShaderToy.mCreated )
+        return;
+
+    var res = gShaderToy.newScript("./syco_files/presets/deform.xml");
+    gShaderToy.startRendering();
+    if( !res )
+    {
+        gShaderToy.pauseTime();
+        gShaderToy.resetTime();
+    }
+}
+
+
+function loadPreset()
+{
+    var no=document.getElementById("myPresets");
+    var txt=no.options[no.selectedIndex].value;
+    gShaderToy.newScript( txt );
+}
+
+
+
+</script>
+</head>
+
+<body onload="myInit()">
+<link href="./syco_files/style.css" rel="stylesheet" type="text/css">
+
+<!-- --------------------------------------------------------------------------------- -->
+<table border="0" align="center" width="100%">
+<tbody><tr>
+  <td width="8"></td>
+  <td align="left" style="font-size:12px">
+      <font style="font-size:36px" >Proof Of Concepts</font></td>
+
+  <td width="8"></td>
+</tr>
+</tbody></table>
+
+<!-- --------------------------------------------------------------------------------- -->
+<br>
+
+<table border="0">
+<tbody><tr>
+
+  <td width="8"></td>
+
+  <td valign="top">
+    <table class="guiWindow">
+    <tbody><tr><td class="windotTitle">Options</td></tr>
+    <tr><td>
+       <table style="font-size:12">
+       <tbody><tr><td>
+       Width <input type="text" class="userInput" id="myXResolution" value="512" style="width:40px" title="horizontal resolution, in pixels" onchange="javascript:gShaderToy.resize()">
+       </td></tr>
+       <tr><td>
+        Height <input type="text" class="userInput" id="myYResolution" value="512" style="width:40px" title="vertical resolution, in pixels" onchange="javascript:gShaderToy.resize()">
+       </td></tr>
+       </tbody></table>
+    </td>
+    </tr></tbody></table>
+  </td>
+
+  <td width="8"></td>
+
+  <td valign="top">
+    <table class="guiWindow">
+    <tbody><tr><td class="windotTitle">Inputs</td></tr>
+    <tr><td>
+       <table style="font-size:12">
+<!--        <tr><td>Shader</td><td><input type="text" class="userInput" value="" id="myScript" value="" style="width:380px" onChange="javascript:gShaderToy.setShader(this.value)" title="the url of the text file containing the shader source code"></td></tr> -->
+        <tbody><tr><td>unit 0</td><td><input type="text" class="userInput" id="myTexture0" value="" style="width:380px" onchange="javascript:gShaderToy.setTexture(0,this.value)" title="url of an image"></td></tr>
+        <tr><td>unit 1</td><td><input type="text" class="userInput" id="myTexture1" value="" style="width:380px" onchange="javascript:gShaderToy.setTexture(1,this.value)" title="url of an image"></td></tr>
+        <tr><td>unit 2</td><td><input type="text" class="userInput" id="myTexture2" value="" style="width:380px" onchange="javascript:gShaderToy.setTexture(2,this.value)" title="url of an image"></td></tr>
+        <tr><td>unit 3</td><td><input type="text" class="userInput" id="myTexture3" value="" style="width:380px" onchange="javascript:gShaderToy.setTexture(3,this.value)" title="url of an image"></td></tr>
+       </tbody></table>
+    </td>
+    </tr></tbody></table>
+  </td>
+
+  <td width="8"></td>
+
+  <td valign="top">
+    <table class="guiWindow">
+     <tbody><tr><td class="windotTitle">Information</td></tr>
+     <tr><td valign="top">
+
+     <table style="font-size:12">
+       <tbody><tr><td>
+       <a href="http://www.iquilezles.org/" id="myInfo" style="text-decoration:none">'Deform' by iq (2009)</a>
+       </td></tr>
+       <tr><td>
+       <!--Comments<br>-->
+       <textarea class="userInput" rows="4" cols="40" readonly="readonly" id="myComments"></textarea>
+       </td></tr>
+     </tbody></table>
+
+     </td></tr>
+    </tbody></table>
+
+  </td>
+
+  <td width="8"></td>
+
+  <td valign="top">
+    <table class="guiWindow">
+     <tbody><tr><td class="windotTitle">Presets</td></tr>
+     <tr><td>
+     <select class="userInput" id="myPresets">
+        <optgroup label="Proof Of Concept">
+          <option value="presets/deform.xml">Real Time Chroma</option>
+        </optgroup>
+       <!-- <optgroup label="2D Effects">
+          <option value="presets/radialblur.xml">Radial Blur</option>
+          <option value="presets/motionblur.xml">Motion Blur</option>
+          <option value="presets/postpro.xml">Postprocesing</option>
+          <option value="presets/julia.xml">Julia</option>
+          <option value="presets/mandel.xml">Mandel</option>
+          <option value="presets/multitexture.xml">Multitexture</option>
+          <option value="presets/flower.xml">Flower</option>
+          <option value="presets/heart.xml">Heart</option>
+          <option value="presets/sierpinski.xml">Sierpinski</option>
+          <option value="presets/metablob.xml">Metablob</option>
+          <option value="presets/plasma.xml">Plasma</option>
+        </optgroup>
+
+        <optgroup label="Plane Deformations">
+          <option value="presets/deform.xml" selected="">Deform</option>
+          <option value="presets/monjori.xml">Monjori</option>
+          <option value="presets/star.xml">Star</option>
+          <option value="presets/twist.xml">Twist</option>
+          <option value="presets/kaleidoscope.xml">Kaleidoscope</option>
+          <option value="presets/zinvert.xml">Z Invert</option>
+          <option value="presets/tunnel.xml">Tunnel</option>
+          <option value="presets/relieftunnel.xml">Relief Tunnel</option>
+          <option value="presets/squaretunnel.xml">Square Tunnel</option>
+          <option value="presets/fly.xml">Fly</option>
+          <option value="presets/pulse.xml">Pulse</option>
+        </optgroup>
+
+        <optgroup label="3D">
+          <option value="presets/slisesix.xml">Slisesix</option>
+          <option value="presets/sult.xml">Sult</option>
+          <option value="presets/valleyball.xml">Valleyball</option>
+          <option value="presets/kinderpainter.xml">Kinderpainter</option>
+          <option value="presets/quaternion.xml">Quaternion</option>
+          <option value="presets/lunaquatic.xml">Lunaquatic</option>
+          <option value="presets/ttroribbon.xml">To the Road of Ribbon</option>
+          <option value="presets/metatunnel.xml">Metatunnel</option>
+          <option value="presets/droid.xml">Droid</option>
+          <option value="presets/nautilus.xml">Nautilus</option>
+          <option value="presets/chocolux.xml">Chocolux</option>
+          <option value="presets/disco.xml">Disco</option>
+          <option value="presets/clod.xml">Clod</option>
+          <option value="presets/mandelbulb.xml">Mandelbulb</option>
+          <option value="presets/leizex.xml">Leizex</option>
+        </optgroup>-->
+     </select>
+     <input type="button" value="Load" class="userInputButtons" title="load the selected preset" onclick="loadPreset()">
+     </td></tr>
+    </tbody></table>
+
+  </td>
+
+
+  <td width="8"></td>
+
+</tr>
+</tbody></table>
+
+<!-- --------------------------------------------------------------------------------- -->
+
+<table border="0">
+<tbody><tr>
+
+ <td valign="top" width="8"></td>
+
+ <td valign="top" align="left">
+
+     <table class="guiWindow">
+     <tbody><tr><td class="windotTitle">Render</td></tr>
+     <tr><td>
+      <table>
+      <tbody><tr>
+      <td width="54" id="myFramerate">59.6 fps</td>
+      <td width="4"></td>
+      <td width="60" id="myTime">640.43</td>
+      <td width="4"></td>
+      <td><input type="image" src="./syco_files/rewind.png" onclick="javascript:gShaderToy.resetTime()" style="" title="reset time" id="myResetButton"></td>
+      <td width="2"></td>
+      <td><input type="image" src="./syco_files/pause.png" onclick="javascript:gShaderToy.pauseTime();" style="" title="pause/resume" id="myPauseButton"></td>
+      </tr>
+      </tbody></table>
+
+     </td></tr>
+     <tr><td>
+     <canvas id="demogl" width="512" height="512" style="background-image:url('bgimage.jpg')"></canvas>
+     </td></tr>
+     </tbody></table>
+
+ </td>
+
+ <td valign="top" width="8"></td>
+
+ <td align="left" valign="top">
+
+     <table class="guiWindow">
+     <tbody><tr><td colspan="2" class="windotTitle">Source</td></tr>
+
+     <tr>
+     <td width="32px"></td>
+     <td>
+      <table>
+      <tbody><tr>
+      <td><input type="image" src="./syco_files/compile.png" onclick="javascript:gShaderToy.newShader()" style="" title="compile (&lt;ALT&gt;+&lt;ENTER&gt;)" id="myResetButton"></td>
+      <td width="8px"></td>
+      <td><input type="image" src="./syco_files/help.png" style="" title="help" onclick="window.open(&#39;help.html&#39;,&#39;Help&#39;,&#39;width=760,height=480,status=yes,toolbar=no,scrollbars=yes&#39;)"></td>
+      </tr>
+      </tbody></table>
+     </td>
+     </tr>
+
+
+     <tr>
+     <td width="32px" id="linesColumn" style="overflow-x: hidden; overflow-y: hidden; ">
+     </td>
+     <td valign="top">
+     <textarea rows="24" cols="80" class="userInput" style="font-family:&#39;courier&#39;;font-size:14" id="myShaderCode" wrap="off"></textarea>
+     <!--<iframe id="myShaderCode" src="codepress/codepress.html" style="border:0px;width:658px;height:400px">
+     oop
+     </iframe>-->
+     </td>
+     </tr>
+
+     <tr>
+     <td width="32px"></td>
+     <td>
+     <textarea type="text" rows="3" cols="80" class="userInput" style="font-family:&#39;courier&#39;;font-size:14" readonly="readonly" value="" id="errorTxtBox"></textarea>
+     </td>
+     </tr>
+     </tbody></table>
+
+ </td>
+
+ <td valign="top" width="8"></td>
+
+</tr>
+</tbody></table>
+
+<!-- --------------------------------------------------------------------------------- -->
+<div style="display: none">
+        <video id="sourcevid2" autoplay="true" loop="true" width="512" height="512" type="video/mp4"> 
+
+        </video>
+        
+        <img id="sourcevid" src="bgimage-square.jpg" height="512" width="512" />
+        <img src="syco_files/presets/tex3.jpg" />
+    </div>
+    <canvas id="sourcecopy" width="512" height="512"></canvas>
+
+
+</body></html>
