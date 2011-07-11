@@ -21,7 +21,7 @@ namespace FimExtensions.FimActivityLibrary
         /// </summary>
         internal static TraceSourceEx Instance
         {
-            get { return new TraceSourceEx("FimExtensions.FimActivityLibrary"); }
+            get { return new TraceSourceEx("Microsoft.ResourceManagement"); }
         }
 
         /// <summary>

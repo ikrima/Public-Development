@@ -131,12 +131,18 @@ namespace FimExtensions.FimActivityLibrary
             /// Translate the WorkflowData items to PowerShell variables
             /// 
             InitialSessionState initialSessionState = InitialSessionState.CreateDefault();
-            String logDetailForPowerShellVariables = "### PowerShell Variables from FIM WorkflowData";
-            foreach (KeyValuePair<String, Object> sessionVariable in this.PowerShellSessionVariables(PowerShellVariables))
+            String logDetailForPowerShellVariables = string.Empty;
+
+            if (!String.IsNullOrEmpty(this.PowerShellVariables))
             {
-                trace.TraceVerbose("Adding PowerShell Session Variable:\n{0} : {1}", sessionVariable.Key, sessionVariable.Value);
-                initialSessionState.Variables.Add(new SessionStateVariableEntry(sessionVariable.Key, sessionVariable.Value, null));
-                logDetailForPowerShellVariables += String.Format("\n${0} = '{1}'", sessionVariable.Key, sessionVariable.Value);
+                logDetailForPowerShellVariables = "### PowerShell Variables from FIM WorkflowData";
+            
+                foreach (KeyValuePair<String, Object> sessionVariable in this.PowerShellSessionVariables(PowerShellVariables))
+                {
+                    trace.TraceVerbose("Adding PowerShell Session Variable:\n{0} : {1}", sessionVariable.Key, sessionVariable.Value);
+                    initialSessionState.Variables.Add(new SessionStateVariableEntry(sessionVariable.Key, sessionVariable.Value, null));
+                    logDetailForPowerShellVariables += String.Format("\n${0} = '{1}'", sessionVariable.Key, sessionVariable.Value);
+                }
             }
 
             ///
@@ -201,7 +207,7 @@ namespace FimExtensions.FimActivityLibrary
                             trace.TraceError("Unable to get Containing Workflow.");
                             throw new InvalidOperationException("Unable to get Containing Workflow");
                         }
-                        containingWorkflow.WorkflowDictionary.Add(this.WorkflowDataNameForOutput, results[0].ToString());
+                        containingWorkflow.WorkflowDictionary[this.WorkflowDataNameForOutput] = results[0].ToString();
                     }
                 }
                 catch (RuntimeException ex)
